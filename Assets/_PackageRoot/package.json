@@ -1,9 +1,10 @@
 {
-    "name": "your.own.package",
-    "displayName": "Your own package",
-    "version": "1.0.0",
+    "name": "com.playmaker.ecosystem.upm.test",
+    "displayName": "PlayMaker Ecosystem Test",
+    "version": "0.0.1",
     "unity": "2019.2",
-    "description": "Some description",
+    "description": "Testing upm distribution",
+    "author": { "name": "Jean Fabre", "url": "https://hutonggames.com" },
 	"dependencies": {
       
     }
