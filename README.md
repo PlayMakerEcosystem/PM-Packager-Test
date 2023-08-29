@@ -6,7 +6,6 @@ This is a test for publishing to Unity Packager
 
 
  # Installation 
-When your package is distributed, you can install it into any Unity project. 
 
 * Open Unity Project Settings Window
 * Select the Package Manager section
