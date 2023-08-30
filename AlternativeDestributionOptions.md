@@ -6,7 +6,8 @@ NPMJS is the most popular Package destribution portal in the world. It is used f
 - Ultra fast deployment
 - Easy creation of new versions
 - Unity Package Manager supports versioning from NPMJS
-- Trusted platform by huge community
+- Trusted platform by huge community 
+
 ### Cons
 - Need to create account and authorize once
 
@@ -20,6 +21,7 @@ Popular in Unity community platform for package destribution. Created as open so
 - Made especially for Unity
 - No registration needed
 - Package can be deployed directly from GitHub repository
+
 ### Cons
 - Long deployment duration (10 - 60 minutes)
 - Small community (in comparison to other options)
@@ -33,6 +35,7 @@ Amazing GitHub feature, also Unity support it
 ### Pros
 - Ultra fast deployment 
 - Trusted platform by huge community
+
 ### Cons
 - Does not support version fetching, it means you can't see when new version of the package is available in UPM. To install new version you should manually change the version in a project.
 
@@ -44,6 +47,7 @@ Amazing GitHub feature, also Unity support it
 Unity UPM support direct GitHub links to public repositories for using them as a package. The only required thing - the link should point on a folder which contains `package.json` file.
 ### Pros
 - no special steps required, just use your public repository as a package in UPM
+
 ### Cons
 - Does not support version fetching, it means you can't see when new version of the package is available in UPM. To install new version you should manually change the version in a project.
 
@@ -95,3 +99,4 @@ Dont forget to replace **USER** and **REPO** to yours.
     }
 }
 </code></pre>
+ 
