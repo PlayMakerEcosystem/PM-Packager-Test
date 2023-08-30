@@ -1,0 +1,11 @@
+{
+    "name": "com.playmaker.ecosystem.upm.utils",
+    "displayName": "PlayMaker Ecosystem Utils",
+    "version": "1.0.0",
+    "unity": "2019.2",
+    "description": "Testing upm dependancy",
+    "author": { "name": "HutongGames", "url": "https://hutonggames.com" },
+	"dependencies": {
+      
+    }
+}
