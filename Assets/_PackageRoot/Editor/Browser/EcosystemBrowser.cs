@@ -18,6 +18,7 @@ using System.IO;
 using com.hutonggames.playmakereditor.addons.ecosystem.markdownsharp;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using MyUtils = com.hutonggames.playmakereditor.addons.ecosystem.Utils; // conflict with Unity Remote utils public class... odd
 
 #pragma warning disable 618
@@ -162,56 +163,63 @@ namespace com.hutonggames.playmakereditor.addons.ecosystem
         /// <summary>
         /// either the Application DataPath or the Package path
         /// </summary>
-        public string RootPath;
-        #endregion
+        public static string RootPath;
+
+        public static string GetRootPath()
+        {
+            return RootPath;
+        }
 
         public static EcosystemBrowser Instance;
+        
+        #endregion
 
-#if UNITY_EDITOR_OSX
-        [MenuItem("PlayMaker/Addons/Ecosystem/TouchBar/Ecosystem Browser Toggle %&e", false, 1000)]
-        static void ToggleWindow()
-        {
-            if (Instance != null)
-            {
-                Instance.Close();
-                return;
-            }
-
-            Init();
-        }
-#endif
+        public UnityEditor.PackageManager.PackageInfo PackageInfo;
         
         [MenuItem("PlayMaker/Addons/Ecosystem/Ecosystem Browser &e", false, 1000)]
         static void Init()
         {
             // Get existing open window or if none, make a new one:
-            Instance = (EcosystemBrowser) EditorWindow.GetWindow(typeof(EcosystemBrowser));
-            
-            string _pathtoSelf = AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(Instance));
-
-            Instance.RootPath = Application.dataPath;
-            if (_pathtoSelf.StartsWith("Packages"))
+            EcosystemBrowser _instance = (EcosystemBrowser) EditorWindow.GetWindow(typeof(EcosystemBrowser));
+            Instance = _instance;
+            _instance.PackageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+            if ( _instance.PackageInfo != null)
             {
-                //Instance.RootPath = "Packages/com.hutonggames.playmakereditor.addons.ecosystem";
-                Instance.RootPath = "Packages/com.playmaker.ecosystem.upm.test";
+              //  Debug.Log("In package " +  Instance.PackageInfo.name);
             }
-      //      Debug.Log("################ Init with root:"+Instance.RootPath);
-      RefreshDisclaimerPref();
+            else
+            {
+             //   Debug.Log("Not in package");
+            }
+
+            RootPath = _instance.PackageInfo != null ? "Packages/"+_instance.PackageInfo.name : Application.dataPath;
             
-            Instance.position = new Rect(100, 100, 430, 600);
-            Instance.minSize = new Vector2(430, 600);
+            string _pathtoSelf = AssetDatabase.GetAssetPath(MonoScript.FromScriptableObject(_instance));
+
+           // Instance.RootPath = Application.dataPath;
+            //if (_pathtoSelf.StartsWith("Packages"))
+            //{
+                //Instance.RootPath = "Packages/com.hutonggames.playmakereditor.addons.ecosystem";
+           //     Instance.RootPath = "Packages/com.playmaker.ecosystem.upm.test";
+          //  }
+            
+            Debug.Log("################ Init with root:"+RootPath);
+            RefreshDisclaimerPref();
+            
+            _instance.position = new Rect(100, 100, 430, 600);
+            _instance.minSize = new Vector2(430, 600);
 #if UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0
 			Instance.title = "Ecosystem";
 #else
             string _ecosystemSkinPath = "";
-            Instance.EcosystemSkin = MyUtils.GetGuiSkin("PlayMakerEcosystemGuiSkin",Instance.RootPath, out _ecosystemSkinPath);
+            _instance.EcosystemSkin = MyUtils.GetGuiSkin("PlayMakerEcosystemGuiSkin",RootPath, out _ecosystemSkinPath);
 
-            if (Instance.EcosystemSkin != null)
+            if (_instance.EcosystemSkin != null)
             {
                 Texture _iconTexture =
-                    Instance.EcosystemSkin.FindStyle("Ecosystem Logo Embossed @12px").normal.background as Texture;
+                    _instance.EcosystemSkin.FindStyle("Ecosystem Logo Embossed @12px").normal.background as Texture;
 
-                Instance.titleContent = new GUIContent("Ecosystem", _iconTexture, "The Ecosystem Browser");
+                _instance.titleContent = new GUIContent("Ecosystem", _iconTexture, "The Ecosystem Browser");
 #endif
             }
             else
@@ -268,9 +276,8 @@ In doubt, do not use this and get in touch with us to learn more before you work
 
             if (_disclaimerMarkdownGUI == null)
             {
-                _disclaimerMarkdownGUI = new MarkdownGUI();
+                _disclaimerMarkdownGUI = new MarkdownGUI(GUI.skin);
                 _disclaimerMarkdownGUI.ProcessSource(_disclaimer_label);
-                _disclaimerMarkdownGUI.UserGuiSkin(GUI.skin);
             }
 
             _disclaimerMarkdownGUI.OnGUILayout_MardkDownTextArea("Label Medium");
@@ -702,7 +709,7 @@ In doubt, do not use this and get in touch with us to learn more before you work
             // set up the skin if not done yet.
             if (editorSkin == null)
             {
-                editorSkin = MyUtils.GetGuiSkin("VolcanicGuiSkin",RootPath, out editorSkinPath);
+                editorSkin = MyUtils.GetGuiSkin("VolcanicGuiSkin",EcosystemBrowser.RootPath, out editorSkinPath);
                 if (editorSkin != null)
                 {
                     bg = (Texture2D) (AssetDatabase.LoadAssetAtPath(editorSkinPath + "images/bg.png",
@@ -1110,6 +1117,8 @@ In doubt, do not use this and get in touch with us to learn more before you work
 
         void OnGUI()
         {
+            if (Instance != this) Instance = this; // corner case in managed package when updating, it looses the pointer.
+            
             wantsMouseMove = true;
 
 
@@ -2261,6 +2270,7 @@ In doubt, do not use this and get in touch with us to learn more before you work
         }
         // END ADDED BY DJAYDINO
 
+  
         void SearchRep()
         {
             ShowActionDetails = false;

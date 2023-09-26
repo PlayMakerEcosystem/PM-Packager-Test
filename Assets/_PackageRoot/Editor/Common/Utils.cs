@@ -170,30 +170,25 @@ namespace com.hutonggames.playmakereditor.addons.ecosystem
 
 			Debug.Log("Path for item 0:"+allFiles[0]);
 			string fullPath;
-			if (root.StartsWith("Package"))
+			if (root.StartsWith("Packages/"))
 			{
+				string packageName = root.Substring(9); // remove "Packages/" from the root string.
+				
 				// /Users/jeanfabre/Documents/Work/PlayMaker/Temp/Packager_test_2019/Library/PackageCache/
 				// com.hutonggames.playmakereditor.addons.ecosystem@6082523372/Editor/Browser/EditorResources/Skin/PlayMakerEcosystemGuiSkin.guiskin
 				
 				// split after the domain+"@"
 				string _file = allFiles[0];
-				//string _cachePath = _file.Substring(_file.LastIndexOf("com.hutonggames.playmakereditor.addons.ecosystem@") + 49);
-				 string _cachePath = _file.Substring(_file.LastIndexOf("com.playmaker.ecosystem.upm.test@") + 33); 
-			//	Debug.Log("_cachePath:"+_cachePath);
-				string _subPath = _cachePath.Substring(_cachePath.IndexOf("/"));
-			//	Debug.Log("_subPath:"+_subPath);
-				//fullPath = "Packages/com.hutonggames.playmakereditor.addons.ecosystem"+_subPath;
-				fullPath = "Packages/com.playmaker.ecosystem.upm.test"+_subPath;
+				string _cachePath = _file.Substring(_file.LastIndexOf(packageName + "@") + packageName.Length + 1);
 				
-				//fullPath = "Packages/com.hutonggames.playmakereditor.addons.ecosystem"+  allFiles[0].Substring(allFiles[0].LastIndexOf("com.hutonggames.playmakereditor.addons.ecosystem")+11+48);
+				string _subPath = _cachePath.Substring(_cachePath.IndexOf("/"));
+				fullPath = root + _subPath;
 			}
 			else
 			{
 				fullPath = allFiles[0].Substring(allFiles[0].LastIndexOf(_pathDelimiter+"Assets"+_pathDelimiter)+1);
 			}
 			
-			
-		//	Debug.Log(fullPath);
 			GUISkin _skin = (GUISkin)AssetDatabase.LoadAssetAtPath(fullPath,typeof(GUISkin));
 			
 			if (_skin==null || !_skin.name.Equals(guiSkinName))
@@ -204,7 +199,6 @@ namespace com.hutonggames.playmakereditor.addons.ecosystem
 			}
 
 			assetPath = fullPath.Substring(0,fullPath.Length - (guiSkinName+".guiskin").Length);
-		//	Debug.Log(assetPath);
 
 			return _skin;
 		}

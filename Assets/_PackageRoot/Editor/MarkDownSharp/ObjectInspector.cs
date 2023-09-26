@@ -22,7 +22,7 @@ namespace com.hutonggames.playmakereditor.addons.ecosystem
 			GUI.enabled = true;
 			if (_markdownGui == null)
 			{
-				_markdownGui = new MarkdownGUI();
+				_markdownGui = new MarkdownGUI(null);
 				_markdownGui.ProcessSource
 					(
 						Utils.GetFileContents

@@ -1,7 +1,7 @@
 {
     "name": "com.playmaker.ecosystem.upm.test",
     "displayName": "PlayMaker Ecosystem Test",
-    "version": "1.3.3",
+    "version": "1.3.14",
     "unity": "2019.2",
     "description": "Testing upm distribution",
     "author": { "name": "HutongGames", "url": "https://hutonggames.com" },

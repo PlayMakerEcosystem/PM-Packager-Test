@@ -69,7 +69,7 @@ namespace com.hutonggames.playmakereditor.addons.ecosystem.markdownsharp
 		/// <summary>
 		/// The markdown skin.
 		/// </summary>
-		static GUISkin _markdownSkin;
+		GUISkin _markdownSkin;
 
 		/// <summary>
 		/// The markdown parser.
@@ -99,9 +99,9 @@ namespace com.hutonggames.playmakereditor.addons.ecosystem.markdownsharp
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Net.FabreJean.UnityEditor.markdownsharp.MarkdownGUI"/> class.
 		/// </summary>
-		public MarkdownGUI()
+		public MarkdownGUI(GUISkin skin)
 		{
-		
+			_markdownSkin = skin;
 		}
 
 		/// <summary>
@@ -140,9 +140,11 @@ namespace com.hutonggames.playmakereditor.addons.ecosystem.markdownsharp
 		/// </summary>
 		public bool OnGUILayout_MardkDownTextArea(string style = null)
 		{
+			if (EcosystemBrowser.Instance == null) return false;
+			
 			if (_markdownSkin==null) 
 			{
-				_markdownSkin = Utils.GetGuiSkin(__guiSkinName__,EcosystemBrowser.Instance.RootPath);
+				_markdownSkin = Utils.GetGuiSkin(__guiSkinName__,EcosystemBrowser.GetRootPath());
 			}
 
 			if(Event.current.type == EventType.MouseDown && Event.current.button == 0) {					
