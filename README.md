@@ -3,7 +3,7 @@
 
 This is a test for publishing to Unity Packager
 
-[![NPM Package](https://img.shields.io/npm/v/com.stansassets.foundation)](https://www.npmjs.com/package/com.stansassets.foundation)
+[![NPM Package](https://img.shields.io/npm/v/com.stansassets.foundation)](https://www.npmjs.com/package/com.playmaker.ecosystem.upm.test)
 
  # Installation 
 
