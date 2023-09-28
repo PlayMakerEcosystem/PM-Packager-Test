@@ -7,5 +7,7 @@
     "author": { "name": "HutongGames", "url": "https://hutonggames.com" },
 	"dependencies": {
         "com.playmaker.ecosystem.upm.utils": "1.0.0"
-    }
+    },
+    "license": "Attribution 4.0 International (CC BY 4.0)",
+    "changelogUrl": "https://github.com/PlayMakerEcosystem/PM-Packager-Test/blob/master/Assets/_PackageRoot/CHANGELOG.md"
 }
