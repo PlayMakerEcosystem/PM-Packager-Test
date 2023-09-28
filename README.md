@@ -4,6 +4,9 @@
 This is a test for publishing to Unity Packager
 
 [![NPM Package](https://img.shields.io/npm/v/com.playmaker.ecosystem.upm.test)](https://www.npmjs.com/package/com.playmaker.ecosystem.upm.test)
+[![Licence](https://img.shields.io/npm/l/com.playmaker.ecosystem.upm.test)](https://github.com/PlayMakerEcosystem/PM-Packager-Test/blob/master/LICENSE)
+
+
 
  # Installation 
 
